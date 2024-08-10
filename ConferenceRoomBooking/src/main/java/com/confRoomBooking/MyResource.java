@@ -5,6 +5,10 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.cfg.Configuration;
+
 /**
  * Root resource (exposed at "myresource" path)
  */
@@ -20,6 +24,8 @@ public class MyResource {
     @GET
     @Produces(MediaType.TEXT_PLAIN)
     public String getIt() {
-        return "Got it!";
+//    	SessionFactory fact = new Configuration().configure().buildSessionFactory();
+//    	Session sess = fact.openSession();
+        return "working";
     }
 }

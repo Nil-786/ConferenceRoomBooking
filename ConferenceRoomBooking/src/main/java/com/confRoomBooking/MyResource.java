@@ -24,8 +24,8 @@ public class MyResource {
     @GET
     @Produces(MediaType.TEXT_PLAIN)
     public String getIt() {
-//    	SessionFactory fact = new Configuration().configure().buildSessionFactory();
-//    	Session sess = fact.openSession();
-        return "working";
+    	SessionFactory fact = new Configuration().configure().buildSessionFactory();
+    	Session sess = fact.openSession();
+        return sess.toString();
     }
 }

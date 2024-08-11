@@ -5,7 +5,7 @@
 	<session-factory>
 
 		<property name="hibernate.dialect">
-			org.hibernate.dialect.MySQLDialect
+			org.hibernate.dialect.MySQL5Dialect
 		</property>
 
 		<property name="hibernate.connection.driver_class">
@@ -23,13 +23,18 @@
 		<property name="hibernate.connection.password">
 			root
 		</property>
-		<property name="hibernate.hbm2ddl.auto">update</property>
+		<property name="hibernate.hbm2ddl.auto">create</property>
 		<property name="hibernate.show_sql">true</property>
 		<property name="hibernate.format_sql">true</property>
 
 
 		<!-- List of XML mapping files -->
 		<!-- <mapping resource = "Employee.hbm.xml"/> -->
+		
+		<mapping class="com.confRoomBooking.models.User"/>
+		<mapping class="com.confRoomBooking.models.ConferenceRoom"/>
+		<mapping class="com.confRoomBooking.models.ConfPhotos"/>
+		<mapping class="com.confRoomBooking.models.Event"/>
 
 	</session-factory>
 </hibernate-configuration>

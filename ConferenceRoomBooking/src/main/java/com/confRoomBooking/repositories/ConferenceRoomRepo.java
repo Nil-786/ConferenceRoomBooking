@@ -15,7 +15,7 @@ public class ConferenceRoomRepo implements ConferenceRoomRepoImpl {
 		try {
 			sess.beginTransaction();
 			id = (Integer) sess.save(conf);
-			sess.getTransaction().commit();
+			sess.gestTransaction().commit();
 		} catch (Exception e) {
 			sess.getTransaction().rollback();
 		}finally {

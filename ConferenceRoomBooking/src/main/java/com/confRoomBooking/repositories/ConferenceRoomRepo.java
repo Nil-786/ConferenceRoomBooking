@@ -57,7 +57,7 @@ public class ConferenceRoomRepo implements ConferenceRoomRepoImpl {
 
 	@Override
 	public boolean deleteConf(int id) {
-		// TODO Auto-generated method stub
+		//delete conference room by id
 		boolean deleted = false;
 		try {
 			sess.beginTransaction();

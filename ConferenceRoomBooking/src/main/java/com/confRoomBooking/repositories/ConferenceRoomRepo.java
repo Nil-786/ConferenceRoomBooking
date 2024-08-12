@@ -33,6 +33,7 @@ public class ConferenceRoomRepo implements ConferenceRoomRepoImpl {
 	@Override
 	public List<ConferenceRoom> readAllConf() {
 		// TODO Auto-generated method stub
+		//all conference room fetch
 		List<User> list = new ArrayList<>();
 		try {
 			sess.beginTransaction();

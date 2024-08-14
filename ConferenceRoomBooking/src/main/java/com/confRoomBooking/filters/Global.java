@@ -9,18 +9,13 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpFilter;
 
+import com.confRoomBooking.services.UserServiceImpl;
+import com.confRoomBooking.services.userService;
+
 /**
  * Servlet Filter implementation class Filter1
  */
-public class Filter1 extends HttpFilter implements Filter {
-       
-    /**
-     * @see HttpFilter#HttpFilter()
-     */
-    public Filter1() {
-        super();
-        
-    }
+public class Global extends HttpFilter implements Filter {
 
 	/**
 	 * @see Filter#destroy()
@@ -33,10 +28,7 @@ public class Filter1 extends HttpFilter implements Filter {
 	 * @see Filter#doFilter(ServletRequest, ServletResponse, FilterChain)
 	 */
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-		// TODO Auto-generated method stub
-		// place your code here
-
-		// pass the request along the filter chain
+		//System.out.println(request.getParameter("uName"));
 		chain.doFilter(request, response);
 	}
 
@@ -44,7 +36,7 @@ public class Filter1 extends HttpFilter implements Filter {
 	 * @see Filter#init(FilterConfig)
 	 */
 	public void init(FilterConfig fConfig) throws ServletException {
-		// TODO Auto-generated method stub
+		System.out.println("Filter 1 initialized");
 	}
 
 }

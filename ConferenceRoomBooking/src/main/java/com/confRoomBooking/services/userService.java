@@ -9,9 +9,9 @@ public class userService implements UserServiceImpl{
 	UserRepoImpl userRepo = new UserRepo();
 	
 	@Override
-	public int userLogin(String userName, String password) {
-		int id = userRepo.readUserByUserNamePassword(userName, password).getId();
-		return id;
+	public User userLogin(String userName, String password) {
+		User user = userRepo.readUserByUserNamePassword(userName, password);
+		return user;
 	}
 
 	@Override

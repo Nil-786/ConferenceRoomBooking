@@ -8,6 +8,7 @@ import com.confRoomBooking.utilities.UserType;
 public class User {
 	
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	int id;
 	
 	String userName;

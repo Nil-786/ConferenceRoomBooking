@@ -15,4 +15,13 @@
     <servlet-name>Jersey Web Application</servlet-name>
     <url-pattern>/webapi/*</url-pattern>
   </servlet-mapping>
+  <filter>
+    <display-name>Filter1</display-name>
+    <filter-name>Filter1</filter-name>
+    <filter-class>com.confRoomBooking.filters.Filter1</filter-class>
+  </filter>
+  <filter-mapping>
+    <filter-name>Filter1</filter-name>
+    <url-pattern>/Filter1</url-pattern>
+  </filter-mapping>
 </web-app>

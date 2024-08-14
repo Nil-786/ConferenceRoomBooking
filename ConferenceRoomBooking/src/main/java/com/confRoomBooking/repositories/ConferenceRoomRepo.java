@@ -8,9 +8,15 @@ import org.hibernate.query.Query;
 
 import com.confRoomBooking.models.ConferenceRoom;
 import com.confRoomBooking.models.User;
+import com.confRoomBooking.utilities.SessionGenerator;
 
 public class ConferenceRoomRepo implements ConferenceRoomRepoImpl {
 	Session sess;
+	public ConferenceRoomRepo () {
+		sess = new SessionGenerator().getSess();
+	}
+	
+	
 	@Override
 	public int addConf(ConferenceRoom conf) {
 		// TODO Auto-generated method stub
@@ -30,7 +36,21 @@ public class ConferenceRoomRepo implements ConferenceRoomRepoImpl {
 	@Override
 	public ConferenceRoom readConf(int id) {
 		// TODO Auto-generated method stub
-		return null;
+		ConferenceRoom croom = new ConferenceRoom();
+		try {
+			sess.beginTransaction();
+			Query q = sess.createQuery("from ConferenceRoom where id = "+id);
+			croom =  (ConferenceRoom) q.list().get(0);
+			sess.getTransaction().commit();
+		} catch (Exception e) {
+			sess.getTransaction().rollback();
+		}finally {
+			sess.close();
+		}
+		
+		return croom;
+
+		
 	}
 
 	@Override
@@ -54,8 +74,19 @@ public class ConferenceRoomRepo implements ConferenceRoomRepoImpl {
 	@Override
 	public boolean updateConf(ConferenceRoom conf) {
 		// TODO Auto-generated method stub
+		boolean updated = false;
+		try {
+			sess.beginTransaction();
+			sess.saveOrUpdate(conf);
+			sess.getTransaction().commit();
+			updated = true;
+		} catch (Exception e) {
+			sess.getTransaction().rollback();
+		}finally {
+			sess.close();
+		}
+		return updated;
 		
-		return false;
 	}
 
 	@Override

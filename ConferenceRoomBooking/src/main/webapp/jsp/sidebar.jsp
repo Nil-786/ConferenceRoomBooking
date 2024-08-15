@@ -23,7 +23,7 @@
 			id="sidebar" style="width: fit-content;height:100vh;" tabindex="1" >
 			<div class="d-flex flex-column flex-shrink-0  px-2 h-100 bg-body-tertiary open"
 			id="section"
-			style="width:240px;"
+			style="width:250px;"
 				>
 				<div class="d-flex justify-content-between" id="brand">
 					<a href="/ConferenceRoomBooking/Home.jsp"

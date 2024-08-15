@@ -12,10 +12,6 @@
 	display: flex;
 
 }
-.sidebar {
-	max-width: fit-content;
-}
-
 .border-form{
 	border: 2px solid #007bff;
 	padding: 20px;

@@ -1,150 +1,111 @@
+<%@page import="java.time.LocalDateTime"%>
+<%@page import="com.confRoomBooking.models.User"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>CONFERENCE ROOM BOOKING FORM</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Room Booking Form</title>
+    
+     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
 
- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
-	 <!-- Bootstrap CSS CDN -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-
-    <!-- jQuery CDN -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-
-    <!-- Bootstrap JS CDN -->
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
-
-    <!-- CSS CDN for datetimepicker -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.min.css" />
-
-<link rel="stylesheet" href="../styles/index.css">
-<!-- datetimepicker jQuery CDN -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js"></script>
-<script src="../js/conference_script.js"></script>
 
 </head>
 <body>
-	<jsp:include page="cdn.jsp"></jsp:include>
-	<section class="page">
-		<div class="box">
-			<div class="sidebar">
-				<%@include file="sidebar.jsp"%>
-			</div>
-			<div class="view">
-					<div class="container text ">
+    <div class="container mt-5">
+        <h2>Room Booking Form</h2>
+        <form id="bookingForm">
+            <div class="mb-3">
+                <label for="roomId" class="form-label">Room ID</label>
+                <input type="text" class="form-control" id="roomId" placeholder="Enter Room ID">
+            </div>
+            <div class="mb-3">
+                <label for="employeeId" class="form-label">Employee ID</label>
+                <input type="text" class="form-control" id="employeeId" placeholder="Enter Employee ID">
+            </div>
+            <div class="mb-3">
+                <label for="employeeName" class="form-label">Employee Name</label>
+                <input type="text" class="form-control" id="employeeName" placeholder="Enter Employee Name">
+            </div>
+            <div class="mb-3">
+                <label for="startTime" class="form-label">Start Time</label>
+                <input type="datetime-local" class="form-control" id="startTime" min="" max="">
+            </div>
+            <div class="mb-3">
+                <label for="endTime" class="form-label">End Time</label>
+                <input type="datetime-local" class="form-control" id="endTime" min="" max="">
+            </div>
+              <div class="mb-3">
+                <label for="eventTitle" class="form-label">Event Title</label>
+                <input type="text" class="form-control" id="eventTitle" placeholder="Enter event title">
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+    <script>
+        // Function to format date to 'yyyy-MM-ddTHH:mm'
+        const formatDate = (date) => {
+        	if (!date) return '';
+            const isoString = date.toISOString();
+            return isoString.substring(0, 16);
+        };
 
-						<h1 class="text-center">Booking Form</h1>
+        // Set min and max date for the date inputs
+        const today = new Date();
+        const minDate = new Date(today);
+        const maxDate = new Date(today);
+        maxDate.setDate(today.getDate() + 7);
 
-						<!-- ACTUAL FORM-->
+        console.log('Min Date:', formatDate(minDate));
+        console.log('Max Date:', formatDate(maxDate));
+        
+        
+        document.getElementById('startTime').min = formatDate(minDate);
+        document.getElementById('startTime').max = formatDate(maxDate);
+        document.getElementById('endTime').min = formatDate(minDate);
+        document.getElementById('endTime').max = formatDate(maxDate);
+        
+        $('#bookingForm').on('submit', function(event) {
+        	event.preventDefault();
+			 var formData = {
+	            empCode: $('#employeeId').val(),
+	            username: $('#employeeName').val(),
+	            title: $('#eventTitle').val(),
+	            //new Date(Date.parse($('#startTime').val())).toISOString()
+	            start: $('#startTime').val(),
+	            end: $('#endTime').val()
+	        };
+	         
+			 console.log(formData);
 
-						<form class="form-horizontal border-form ">
-							<!-- room id -->
-							<div class="form-group">
-								<!-- room id label -->
-								<label class="control label col-sm-2" for="roomId">Room
-									Id :</label>
-								<!-- room id input  -->
-								<div class="col-sm-10">
-									<input type="text" class="form-control" id="roomId"
-										placeholder="Enter Room Id">
-								</div>
-							</div>
-							<!-- room id close -->
+	         
+	         const id = $('#roomId').val();
+	         
+	         $.ajax({
+	             type: 'POST',
+	             url: "/ConferenceRoomBooking/webapi/event/"+id+"/add",
+	             contentType: 'application/json',
+	             data: JSON.stringify(formData),
+	             encode : true,
+	             success: function(response) {
+	                 alert('Event submitted successfully!');
+	             },
+	             error: function(error) {
+	                 alert('Error submitting event.');
+	             }
+	         });
+        	
+        	
+        })
 
-
-							<!-- emp id -->
-							<div class="form-group">
-								<!-- emp id label -->
-								<label class="control label col-sm-2" for="empId">Employee
-									Id :</label>
-								<!-- emp id input  -->
-								<div class="col-sm-10">
-									<input type="text" class="form-control" id="empId"
-										placeholder="Enter Employee Id">
-								</div>
-							</div>
-							<!-- emp id close -->
-
-
-
-							<!-- emp name -->
-							<div class="form-group">
-								<!-- emp name  label -->
-								<label class="control label col-sm-2" for="empName">Employee
-									Name :</label>
-								<!-- emp id input  -->
-								<div class="col-sm-10">
-									<input type="text" class="form-control" id="empName"
-										placeholder="Enter Employee Name">
-								</div>
-							</div>
-							<!-- emp name close -->
-
-							<!-- start time -->
-							<div class="form-group">
-								<!-- start time  label -->
-								<label class="control label col-sm-2" for="startTime">Start
-									Date and Time :</label>
-								<!-- start time input  -->
-								<div class="col-sm-10">
-									<input type="text" class="datetimepicker form-control "
-										id="startTime">
-								</div>
-							</div>
-							<!-- start time close -->
-
-
-							<!-- end  time -->
-							<div class="form-group">
-								<!-- end time  label -->
-								<label class="control label col-sm-2" for="endTime">End
-									Date and Time :</label>
-								<!-- end time input  -->
-								<div class="col-sm-10">
-									<input type="text" class="datetimepicker form-control "
-										id="endTime">
-								</div>
-							</div>
-							<!-- end time close -->
-
-
-
-							<!-- event title -->
-							<div class="form-group">
-								<!-- event title  label -->
-								<label class="control label col-sm-2" for="eventTitle">Event
-									Title :</label>
-								<!-- event title input  -->
-								<div class="col-sm-10">
-									<input type="text" class="form-control" id="eventTitle"
-										placeholder="Enter Event Title">
-								</div>
-							</div>
-							<!-- event title close -->
-
-
-
-							<!-- book button -->
-							<div class="form-group">
-								<button id="bookButton"
-									class="form-control btn btn-primary btn-block">Book
-									Conference Room</button>
-
-							</div>
-							<!-- book button close -->
-
-
-
-						</form>
-
-
-					</div>
-				</div>
-		</div>
-	</section>
+        
+    </script>
+    
 </body>
 </html>

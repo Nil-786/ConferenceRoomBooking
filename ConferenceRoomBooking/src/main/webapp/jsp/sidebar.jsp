@@ -16,6 +16,11 @@
 <link href="https://cdn.lineicons.com/4.0/lineicons.css"
 	rel="stylesheet" />
 <link rel="stylesheet" type="text/css" href="../styles/index.css">
+<script
+	src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+	integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+	crossorigin="anonymous"></script>
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 <body>
 	<div class=" p-0 m-0 ">
@@ -23,7 +28,7 @@
 			id="sidebar" style="width: fit-content;height:100vh;" tabindex="1" >
 			<div class="d-flex flex-column flex-shrink-0  px-2 h-100 bg-body-tertiary open"
 			id="section"
-			style="width:240px;"
+			style="width:250px;"
 				>
 				<div class="d-flex justify-content-between" id="brand">
 					<a href="/ConferenceRoomBooking/Home.jsp"
@@ -72,12 +77,6 @@
 
 
 </body>
-<script
-	src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-	integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
-	crossorigin="anonymous"></script>
-<script src="https://code.jquery.com/jquery-3.3.1.min.js">
-    </script>
 <script>
 function toggleSidebar() {
 	event.preventDefault();

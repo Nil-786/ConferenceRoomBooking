@@ -100,13 +100,13 @@ public class EventRepo implements EventRepoImpl {
 		return deleted;
 	}
 	
-	public List<Event> readEventByConf(int confId) {
+	public List<Event> readEventByConf(ConferenceRoom conf) {
 		List<Event> list = new ArrayList<>();
 		
 		try {
 			sess.beginTransaction();
-			Query q = sess.createQuery("from Event where conf_room_id=:conf");
-			q.setParameter("conf",confId);
+			Query q = sess.createQuery("from Event where conf_room_id=:confg");
+			q.setParameter("confg",conf);
 			list = q.list();
 		} catch(Exception e) {
 			sess.getTransaction().rollback();

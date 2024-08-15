@@ -2,7 +2,7 @@ package com.confRoomBooking.services;
 
 import java.util.List;
 
-
+import com.confRoomBooking.models.ConferenceRoom;
 import com.confRoomBooking.models.Event;
 import com.confRoomBooking.repositories.EventRepo;
 
@@ -30,7 +30,8 @@ public class EventService implements EventServiceImpl{
 		return repo.deleteEvent(id);
 	}
 	
-	public List<Event> getEventByConfId(int confId) {
-		return repo.readEventByConf(confId);
+	public List<Event> getEventByConfId(ConferenceRoom conf) {
+		
+		return repo.readEventByConf(conf);
 	}
 }

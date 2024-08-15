@@ -1,38 +1,46 @@
 package com.confRoomBooking.controllers;
 
-import javax.websocket.server.PathParam;
+import java.util.List;
+
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import com.confRoomBooking.models.Event;
 import com.confRoomBooking.services.EventService;
 import com.confRoomBooking.services.confService;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 @Path("event")
 public class EventController {
 	
 	EventService eventService = new EventService();
+	confService conf = new confService();
 	
 	@POST
-	@Path("/add/{confId}")
+	@Path("/{confId}/add")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response addEvent(Event event) {
+	public Response addEvent(@PathParam("confId") int confId,Event event) {
+		event.setConferenceRoom(conf.getConf(confId));
 		int id = eventService.addEvent(event);
 		return Response.ok(id).build();
 	}
 	
 	
-	@POST
+	@GET
 	@Path("/get")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getEvents() {
-		return Response.ok(eventService.getEvents()).build();
+		List<Event> list = eventService.getEvents();
+		return Response.ok(list).build();
 	}
 	
 	@GET
@@ -42,9 +50,10 @@ public class EventController {
 	}
 	
 	@GET
-	@Path("/get/{confId}")
-	@Consumes(MediaType.APPLICATION_JSON)
+	@Path("/{confId}/get")
+	@Produces(MediaType.APPLICATION_JSON)
 	public Response getEventByConfId(@PathParam("confId") int confId) {
-		return Response.ok(eventService.getEventByConfId(confId)).build();
+		List<Event> list = eventService.getEventByConfId(conf.getConf(confId));
+		return Response.ok(list).build();
 	}
 }

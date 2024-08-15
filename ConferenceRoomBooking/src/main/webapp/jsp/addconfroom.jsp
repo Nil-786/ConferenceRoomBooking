@@ -1,4 +1,7 @@
+<<<<<<< HEAD
 <%@page import="com.confRoomBooking.models.User"%>
+=======
+>>>>>>> b205dd3d8a2c977455e19359ef6381b5f4065297
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
@@ -24,6 +27,7 @@
 	src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<<<<<<< HEAD
 <link rel="stylesheet" type="text/css" href="../styles/index.css">
 <!-- External JS -->
 <script src="../js/super_admin_script.js"></script>
@@ -42,11 +46,25 @@
 			<jsp:include page="sidebar.jsp">
 				<jsp:param value="<%=user.getUserName()%>" name="uName" />
 			</jsp:include>
+=======
+	<link rel="stylesheet" type="text/css" href="../styles/index.css">
+ <!-- External JS -->
+    <script src="../js/super_admin_script.js"></script>
+
+</head>
+<body>
+	<section class="page">
+		<div class="box">
+			<div class="sidebar">
+				<%@include file="sidebar.jsp"%>
+			</div>
+>>>>>>> b205dd3d8a2c977455e19359ef6381b5f4065297
 			<div class="view">
 				<div class="container " style="margin-top: 60px">
 					<h1 class="text-center">Add Conference Room Form</h1>
 
 					<!-- Actual Form -->
+<<<<<<< HEAD
 					<form class="form-horizontal align-self-center" id="addDetails">
 						<!-- Room ID -->
 						<div class="row mb-3">
@@ -55,6 +73,16 @@
 							<div class="col-sm-10">
 								<input type="text" class="form-control" id="name"
 									placeholder="Enter Room name" name="name">
+=======
+					<form class="form-horizontal align-self-center"  id="addDetails">
+						<!-- Room ID -->
+						<div class="row mb-3">
+							<label class="col-sm-2 col-form-label" for="addroomId">Room
+								Id :</label>
+							<div class="col-sm-10">
+								<input type="text" class="form-control" id="addroomId"
+									placeholder="Enter Room Id">
+>>>>>>> b205dd3d8a2c977455e19359ef6381b5f4065297
 							</div>
 						</div>
 
@@ -64,7 +92,11 @@
 								Capacity :</label>
 							<div class="col-sm-10">
 								<input type="text" class="form-control" id="capacity"
+<<<<<<< HEAD
 									placeholder="Enter Capacity" name="capacity">
+=======
+									placeholder="Enter Capacity">
+>>>>>>> b205dd3d8a2c977455e19359ef6381b5f4065297
 							</div>
 						</div>
 
@@ -88,8 +120,12 @@
 						<!-- Add Conference Room Button -->
 						<div class="row">
 							<div class="col-sm-12">
+<<<<<<< HEAD
 								<button id="addButton"
 									class="form-control  btn btn-primary mt-3">Add
+=======
+								<button id="addButton" class="form-control  btn btn-primary mt-3">Add
+>>>>>>> b205dd3d8a2c977455e19359ef6381b5f4065297
 									Conference Room</button>
 							</div>
 						</div>
@@ -99,6 +135,7 @@
 		</div>
 	</section>
 
+<<<<<<< HEAD
 	<script type="text/javascript">
 		$(document).ready(function() {
 			$('#addDetails').submit(function(event) {
@@ -147,5 +184,7 @@
 			});
 		});
 	</script>
+=======
+>>>>>>> b205dd3d8a2c977455e19359ef6381b5f4065297
 </body>
 </html>

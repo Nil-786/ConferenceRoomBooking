@@ -17,10 +17,10 @@ public class Event {
 	
 	Long empCode;
 	
-	@JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm")
+	@JsonFormat(shape = JsonFormat.Shape.STRING,pattern = "yyyy-MM-dd'T'HH:mm")
 	LocalDateTime start;
 	
-	@JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm")
+	@JsonFormat(shape = JsonFormat.Shape.STRING,pattern = "yyyy-MM-dd'T'HH:mm")
 	LocalDateTime end;
 	
 	String title;

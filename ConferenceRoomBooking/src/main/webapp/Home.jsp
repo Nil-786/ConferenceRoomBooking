@@ -6,8 +6,13 @@
 <head>
 <meta charset="ISO-8859-1">
 <title>Events</title>
+<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/fullcalendar@5.1.0/main.min.css">
 <script
-	src='https://cdn.jsdelivr.net/npm/fullcalendar/index.global.min.js'></script>
+	src="https://cdn.jsdelivr.net/npm/fullcalendar@5.1.0/main.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.7.1.js"
+	integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
+	crossorigin="anonymous"></script>
 </head>
 <body>
 	<%!User user = new User();%>
@@ -16,16 +21,17 @@
 	user = (User) request.getSession().getAttribute("user");
 	%>
 	<section class="page">
-		<div class="box">
+		<div class="d-flex justify-content-between">
 			<div class="sidebar">
-				<jsp:include page="sidebar.jsp">
+				<jsp:include page="jsp/sidebar.jsp">
 					<jsp:param value="<%=user.getUserName()%>" name="uName" />
 				</jsp:include>
 			</div>
-			<div class="view mh-80">
-				<div id="calendar" class="mx-auto h-75" ></div>
+			<div class="view mx-auto w-100 mt-5">
+				<div id="calendar" class="overflow-auto" style="max-height: 80vh;"></div>
 			</div>
 		</div>
+
 	</section>
 </body>
 

@@ -25,6 +25,7 @@ import org.hibernate.cfg.Configuration;
 
 import com.confRoomBooking.models.User;
 import com.confRoomBooking.services.*;
+import com.confRoomBooking.utilities.UserType;
 
 @Path("user")
 public class UserController {
@@ -53,5 +54,15 @@ public class UserController {
 		}
 		return Response.temporaryRedirect(URI.create("/ConferenceRoomBooking/")).build();
 
+	}
+	
+	@GET
+	@Path("logout")
+	public Response logoutUser(@Context HttpServletRequest request) {
+		User user = new User();
+		user.setUserName("Guest");
+		user.setType(UserType.GUEST);
+		request.getSession().setAttribute("user", user);
+		return Response.temporaryRedirect(URI.create("/ConferenceRoomBooking/Home.jsp")).build();
 	}
 }

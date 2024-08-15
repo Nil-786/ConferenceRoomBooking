@@ -32,5 +32,10 @@ public class confService implements confServiceImpl{
 	public void setPhotos(List<ConfPhotos> photos) {
 		this.photos = photos;
 	}
+	@Override
+	public List<ConferenceRoom> getAllConf() {
+		List<ConferenceRoom> confList = confRepo.readAllConf();
+		return confList;
+	}
 
 }

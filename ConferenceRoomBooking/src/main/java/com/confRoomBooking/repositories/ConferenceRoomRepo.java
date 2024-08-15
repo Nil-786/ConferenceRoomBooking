@@ -26,7 +26,9 @@ public class ConferenceRoomRepo implements ConferenceRoomRepoImpl {
 			id = (Integer) sess.save(conf);
 			sess.getTransaction().commit();
 		} catch (Exception e) {
-			sess.getTransaction().rollback();
+			if (sess.getTransaction() != null) {
+				sess.getTransaction().rollback();
+	        }
 		}finally {
 			sess.close();
 		}
@@ -43,7 +45,9 @@ public class ConferenceRoomRepo implements ConferenceRoomRepoImpl {
 			croom =  (ConferenceRoom) q.list().get(0);
 			sess.getTransaction().commit();
 		} catch (Exception e) {
-			sess.getTransaction().rollback();
+			if (sess.getTransaction() != null) {
+				sess.getTransaction().rollback();
+	        }
 		}finally {
 			sess.close();
 		}
@@ -63,7 +67,9 @@ public class ConferenceRoomRepo implements ConferenceRoomRepoImpl {
 			list = q.list();
 			sess.getTransaction().commit();
 		} catch (Exception e) {
-			sess.getTransaction().rollback();
+			if (sess.getTransaction() != null) {
+				sess.getTransaction().rollback();
+	        }
 		}finally {
 			sess.close();
 		}
@@ -81,7 +87,9 @@ public class ConferenceRoomRepo implements ConferenceRoomRepoImpl {
 			sess.getTransaction().commit();
 			updated = true;
 		} catch (Exception e) {
-			sess.getTransaction().rollback();
+			if (sess.getTransaction() != null) {
+				sess.getTransaction().rollback();
+	        }
 		}finally {
 			sess.close();
 		}
@@ -101,7 +109,9 @@ public class ConferenceRoomRepo implements ConferenceRoomRepoImpl {
 			sess.getTransaction().commit();
 			deleted = true;
 		} catch (Exception e) {
-			sess.getTransaction().rollback();
+			if (sess.getTransaction() != null) {
+				sess.getTransaction().rollback();
+	        }
 		}finally {
 			sess.close();
 		}

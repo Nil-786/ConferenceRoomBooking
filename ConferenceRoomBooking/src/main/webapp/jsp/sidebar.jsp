@@ -1,3 +1,4 @@
+<%@page import="com.fasterxml.jackson.databind.deser.impl.CreatorCandidate.Param"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
@@ -25,7 +26,7 @@
 			style="width:240px;"
 				>
 				<div class="d-flex justify-content-between" id="brand">
-					<a href="Home.jsp"
+					<a href="/ConferenceRoomBooking/Home.jsp"
 						class="d-flex align-items-center justify-content-center gap-2 mb-3  link-body-emphasis text-decoration-none ">
 						<i class="lni lni-apartment fs-2 text-center"></i> <span class="fs-4 content">Sidebar</span>
 					</a>
@@ -36,15 +37,15 @@
 
 				<hr>
 				<ul class="nav nav-pills flex-column mb-auto justify-content-evenly">
-					<li class="nav-item"><a href="listEvents.jsp" class="d-flex gap-2 align-items-center nav-link active"
+					<li class="nav-item"><a href="/ConferenceRoomBooking/jsp/listEvents.jsp" class="d-flex gap-2 align-items-center nav-link active"
 						aria-current="page"> <i class="lni lni-calendar fs-5 link "></i>
 							<span class="content">My Events</span>
 					</a></li>
-					<li><a href="listConferenceRooms.jsp"
+					<li><a href="/ConferenceRoomBooking/jsp/listConferenceRooms.jsp"
 						class="nav-link link-body-emphasis gap-2  d-flex align-items-center"> <i
 							class="lni lni-apartment link fs-5"></i><span class="content">View conference rooms</span>
 					</a></li>
-					<li><a href="addconfroom.jsp"
+					<li><a href="/ConferenceRoomBooking/jsp/addconfroom.jsp"
 						class="nav-link link-body-emphasis gap-2  d-flex align-items-center"> <i
 							class="lni lni-apartment link fs-5"></i><span class="content">Add conference room</span>
 					</a></li>
@@ -57,7 +58,7 @@
 						alt="" width="32" height="32" class="rounded-circle me-2"> <strong class="content">${param.uName}</strong>
 					</a>
 					<ul class="dropdown-menu text-small shadow ">
-						<li><a class="dropdown-item " href="#">Sign out</a></li>
+						<li><a class="dropdown-item " href="/ConferenceRoomBooking/webapi/user/logout">Sign out</a></li>
 					</ul>
 				</div>
 			</div>

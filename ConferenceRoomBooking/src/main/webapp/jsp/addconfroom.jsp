@@ -45,7 +45,15 @@
 			<div class="view">
 				<div class="container " style="margin-top: 60px">
 					<h1 class="text-center">Add Conference Room Form</h1>
-
+					<!--  only for image -->
+					
+					
+			<form id="uploadForm">
+    <input type="file" name="photos" id="photo" accept="image/*" multiple />
+    <button type="submit" id="addImage">Add Photos</button>
+</form>
+					</div>
+					
 					<!-- Actual Form -->
 					<form class="form-horizontal align-self-center" id="addDetails">
 						<!-- Room ID -->
@@ -69,21 +77,16 @@
 						</div>
 
 						<!-- Photos -->
-						<div class="row mb-3">
-							<label class="col-sm-2 col-form-label" for="photoList">Upload
-								Photos :</label>
-							<div class="col-sm-10" id="photoList">
-								<!-- Dynamically added photo inputs will appear here -->
-							</div>
-						</div>
+
 
 						<!-- Add More Image Button -->
-						<div class="row mb-3">
+						<!--  <div class="row mb-3">
 							<div class="col-sm-10 offset-sm-2">
 								<button type="button" class="btn btn-primary" id="addMore">Add
 									More Image</button>
 							</div>
-						</div>
+						</div>-->
+
 
 						<!-- Add Conference Room Button -->
 						<div class="row">
@@ -113,7 +116,7 @@
 					type : 'POST',
 					url : '/ConferenceRoomBooking/webapi/conf/add',
 					data : JSON.stringify(formData),
-					contentType: 'application/json',
+					contentType : 'application/json',
 					encode : true,
 					success : function(response) {
 						console.log('conf added', response);
@@ -123,17 +126,17 @@
 					}
 				});
 			});
-			
-			$('#photoForm').submit(function(event) {
+
+			/*$('#addImage').submit(function(event) {
 				event.preventDefault();
 
 				var formData = {
-						data : $('#photo').val()
+					data : $('#photo').val()
 				};
 
 				$.ajax({
 					type : 'POST',
-					url : '/ConferenceRoomBooking/webapi/conf/add',
+					url : '/ConferenceRoomBooking/webapi/conf/addPhoto',
 					data : formData,
 					dataType : 'json',
 					encode : true,
@@ -144,8 +147,77 @@
 						console.log('unsuccessful:', error);
 					}
 				});
+			});*/
+			
+			$('#uploadForm').submit(function(event) {
+			    event.preventDefault();
+
+			    var formData = new FormData();
+			    var files = $('#photo')[0].files;
+			    var byteArrayList = [];
+
+			    /*function convertFileToByteArray(file, callback) {
+			        var reader = new FileReader();
+			        reader.onload = function(event) {
+			            var byteArray = new Uint8Array(event.target.result);
+			            callback(byteArray);
+			        };
+			        reader.readAsArrayBuffer(file);
+			    }*/
+
+			    $.each(files, function(i, file) {
+			       // convertFileToByteArray(file, function(byteArray) {
+			         //   byteArrayList.push(byteArray);
+
+			            formData.append('photos', file);
+			       });
+			            //console.log('Byte array for file ' + file.name + ':', byteArray);
+
+			          /*  if (byteArrayList.length === files.length) {
+			                $.ajax({
+			                    type: 'POST',
+			                    url: '/ConferenceRoomBooking/webapi/conf/upload', // Match your API endpoint
+			                    data: formData,
+			                    processData: false,
+			                    contentType: false,
+			                    dataType: 'json',
+			                    cache: false,
+			                    success: function(response) {
+			                        console.log('Upload response:', response);
+			                        if (response.status === 'success') {
+			                            console.log('Files uploaded successfully');
+			                        } else {
+			                            console.log('Upload failed:', response.message);
+			                        }
+			                    },
+			                    error: function(error) {
+			                        console.log('Error:', error);
+			                    }
+			                });
+			            }
+			        });*/
+			    $.ajax({
+			        type: 'POST',
+			        url: '/ConferenceRoomBooking/webapi/conf/upload', 
+			        data: formData,
+			        processData: false,  // Prevent jQuery from processing the data
+			        contentType: false,  // Prevent jQuery from setting content type
+			        dataType: 'json',
+			        cache: false,        // Prevent caching
+			        success: function(response) {
+			            console.log('Photos added successfully', response);
+			        },
+			        error: function(error) {
+			            console.log('Error:', error);
+			        }
+			    });
+			    });
 			});
-		});
+
+
+
+
+		
 	</script>
 </body>
 </html>

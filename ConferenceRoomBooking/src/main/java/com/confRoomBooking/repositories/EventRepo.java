@@ -24,7 +24,9 @@ public class EventRepo implements EventRepoImpl {
 			id = (Integer) sess.save(event);
 			sess.getTransaction().commit();
 		} catch (Exception e) {
-			sess.getTransaction().rollback();
+			if (sess.getTransaction() != null) {
+				sess.getTransaction().rollback();
+	        }
 		}finally {
 			sess.close();
 		}
@@ -41,7 +43,9 @@ public class EventRepo implements EventRepoImpl {
 			event =  (Event) q.list().get(0);
 			sess.getTransaction().commit();
 		} catch (Exception e) {
-			sess.getTransaction().rollback();
+			if (sess.getTransaction() != null) {
+				sess.getTransaction().rollback();
+	        }
 		}finally {
 			sess.close();
 		}
@@ -58,7 +62,9 @@ public class EventRepo implements EventRepoImpl {
 			list = q.list();
 			sess.getTransaction().commit();
 		} catch (Exception e) {
-			sess.getTransaction().rollback();
+			if (sess.getTransaction() != null) {
+				sess.getTransaction().rollback();
+	        }
 		}finally {
 			sess.close();
 		}
@@ -75,7 +81,9 @@ public class EventRepo implements EventRepoImpl {
 			sess.getTransaction().commit();
 			updated = true;
 		} catch (Exception e) {
-			sess.getTransaction().rollback();
+			if (sess.getTransaction() != null) {
+				sess.getTransaction().rollback();
+	        }
 		}finally {
 			sess.close();
 		}
@@ -93,7 +101,9 @@ public class EventRepo implements EventRepoImpl {
 			sess.getTransaction().commit();
 			deleted = true;
 		} catch (Exception e) {
-			sess.getTransaction().rollback();
+			if (sess.getTransaction() != null) {
+				sess.getTransaction().rollback();
+	        }
 		}finally {
 			sess.close();
 		}
@@ -109,12 +119,38 @@ public class EventRepo implements EventRepoImpl {
 			q.setParameter("confg",conf);
 			list = q.list();
 		} catch(Exception e) {
-			sess.getTransaction().rollback();
+			if (sess.getTransaction() != null) {
+				sess.getTransaction().rollback();
+	        }
 		} finally {
 			sess.close();
 		}
 		
 		return list;
+	}
+	
+	
+	
+	public Event isEventByConf(ConferenceRoom conf,Event event) {
+		try {
+			sess.beginTransaction();
+			Query q = sess.createQuery("from Event e where e.conf_room_id =:conf and (((e.start between :startTime and :endTime) or (e.end between :startTime and :endTime)) or (e.start <=:startTime and e.end >=:endTime))");
+			q.setParameter("startTime", event.getStart());
+			q.setParameter("endTime", event.getEnd());
+			q.setParameter("conf", conf);
+			
+			if(q.list().size() > 0) {
+				return (Event) q.list().get(0);
+			}
+		} catch(Exception e) {
+			if (sess.getTransaction() != null) {
+				sess.getTransaction().rollback();
+	        }
+		} finally {
+			sess.close();
+		}
+		
+		return null;
 	}
 
 }

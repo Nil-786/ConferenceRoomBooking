@@ -4,13 +4,16 @@ import java.util.List;
 
 import com.confRoomBooking.models.ConferenceRoom;
 import com.confRoomBooking.models.Event;
+import com.confRoomBooking.repositories.ConferenceRoomRepo;
 import com.confRoomBooking.repositories.EventRepo;
 
 public class EventService implements EventServiceImpl{
 	EventRepo repo;
+	ConferenceRoomRepo confRepo;
 	
 	public EventService() {
 		this.repo = new EventRepo();
+		this.confRepo = new ConferenceRoomRepo();
 	}
 	
 	
@@ -30,8 +33,16 @@ public class EventService implements EventServiceImpl{
 		return repo.deleteEvent(id);
 	}
 	
-	public List<Event> getEventByConfId(ConferenceRoom conf) {
-		
-		return repo.readEventByConf(conf);
+	public Event getEvent(int id) {
+		return repo.readEvent(id);
 	}
+	
+	public List<Event> getEventByConfId(int confId) {
+		return repo.readEventByConf(confRepo.readConf(confId));
+	}
+	
+	public Event checkEvent(Event event) {
+		return repo.isEventByConf(confRepo.readConf(event.getConferenceRoom().getId()), event);
+	}
+	
 }

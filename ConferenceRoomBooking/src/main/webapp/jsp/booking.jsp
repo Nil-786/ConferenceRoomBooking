@@ -24,22 +24,27 @@
             <div class="mb-3">
                 <label for="roomId" class="form-label">Room ID</label>
                 <input type="text" class="form-control" id="roomId" placeholder="Enter Room ID">
+                <div id="error-roomId"></div>
             </div>
             <div class="mb-3">
                 <label for="employeeId" class="form-label">Employee ID</label>
-                <input type="text" class="form-control" id="employeeId" placeholder="Enter Employee ID">
+                <input type="number" class="form-control" id="employeeId" placeholder="Enter Employee ID">
+                <div id="error-employeeId"></div>
             </div>
             <div class="mb-3">
                 <label for="employeeName" class="form-label">Employee Name</label>
                 <input type="text" class="form-control" id="employeeName" placeholder="Enter Employee Name">
+                <div id="error-employeeName"></div>
             </div>
             <div class="mb-3">
                 <label for="startTime" class="form-label">Start Time</label>
                 <input type="datetime-local" class="form-control" id="startTime" min="" max="">
+                <div id="error-startTime"></div>
             </div>
             <div class="mb-3">
                 <label for="endTime" class="form-label">End Time</label>
                 <input type="datetime-local" class="form-control" id="endTime" min="" max="">
+                <div id="error-endTime"></div>
             </div>
               <div class="mb-3">
                 <label for="eventTitle" class="form-label">Event Title</label>
@@ -47,6 +52,7 @@
             </div>
             <button type="submit" class="btn btn-primary">Submit</button>
         </form>
+        
     </div>
     <script>
         // Function to format date to 'yyyy-MM-ddTHH:mm'
@@ -73,26 +79,25 @@
         
         $('#bookingForm').on('submit', function(event) {
         	event.preventDefault();
-			 var formData = {
-	            empCode: $('#employeeId').val(),
-	            username: $('#employeeName').val(),
-	            title: $('#eventTitle').val(),
-	            //new Date(Date.parse($('#startTime').val())).toISOString()
-	            start: $('#startTime').val(),
-	            end: $('#endTime').val()
-	        };
-	         
-			 console.log(formData);
-
-	         
+        	
 	         const id = $('#roomId').val();
+	         const startDate = $('#startTime').val();
+	         const endDate = $('#endTime').val();
+	         
+	         console.log(Date.parse(startDate).getTime());
+	         
+	         if(Date.parse(startDate).getTime() > Date.parse(endDate).getTime()) {
+	        	 $('#error-endTime').text("end time is less than start time ");
+	        	 return;
+	         } else if(Date.parse(startDate).getTime() === Date.parse(endDate).getTime()) {
+	        	 $('#error-startTime').text("both start and end time are equal");
+	        	 $('#error-endTime').text("both start and end time are equal");
+	        	 return;
+	         }
 	         
 	         $.ajax({
-	             type: 'POST',
-	             url: "/ConferenceRoomBooking/webapi/event/"+id+"/add",
-	             contentType: 'application/json',
-	             data: JSON.stringify(formData),
-	             encode : true,
+	             type: 'GET',
+	             url: "http://localhost:8080/ConferenceRoomBooking/webapi/event/1/add?employeeName="+$('#employeeName').val()+"&employeeId="+$('#employeeId').val()+"&startTime="+$('#startTime').val()+"&endTime="+$('#endTime').val()+"&eventTitle="+$('#eventTitle').val(),
 	             success: function(response) {
 	                 alert('Event submitted successfully!');
 	             },

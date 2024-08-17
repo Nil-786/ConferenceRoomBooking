@@ -50,7 +50,7 @@ public class UserController {
 		if (user.getUserName() != null) {
 			HttpSession session = request.getSession(true);
 			session.setAttribute("user", user);
-			return Response.temporaryRedirect(URI.create("/ConferenceRoomBooking/jsp/Home.jsp")).build();
+			return Response.temporaryRedirect(URI.create("/ConferenceRoomBooking/Home.jsp")).build();
 		}
 		return Response.temporaryRedirect(URI.create("/ConferenceRoomBooking/")).build();
 

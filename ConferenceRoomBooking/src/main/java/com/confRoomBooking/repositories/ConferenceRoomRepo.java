@@ -30,7 +30,7 @@ public class ConferenceRoomRepo implements ConferenceRoomRepoImpl {
 				sess.getTransaction().rollback();
 	        }
 		}finally {
-			sess.close();
+//			sess.close();
 		}
 		return id;
 	}
@@ -49,7 +49,7 @@ public class ConferenceRoomRepo implements ConferenceRoomRepoImpl {
 				sess.getTransaction().rollback();
 	        }
 		}finally {
-			sess.close();
+//			sess.close();
 		}
 		
 		return croom;
@@ -71,7 +71,7 @@ public class ConferenceRoomRepo implements ConferenceRoomRepoImpl {
 				sess.getTransaction().rollback();
 	        }
 		}finally {
-			sess.close();
+			//sess.close();
 		}
 		return list;
 		
@@ -91,7 +91,7 @@ public class ConferenceRoomRepo implements ConferenceRoomRepoImpl {
 				sess.getTransaction().rollback();
 	        }
 		}finally {
-			sess.close();
+//			sess.close();
 		}
 		return updated;
 		
@@ -113,7 +113,7 @@ public class ConferenceRoomRepo implements ConferenceRoomRepoImpl {
 				sess.getTransaction().rollback();
 	        }
 		}finally {
-			sess.close();
+//			sess.close();
 		}
 		return deleted;
 	}

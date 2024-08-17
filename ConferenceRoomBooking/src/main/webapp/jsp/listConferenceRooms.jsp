@@ -14,26 +14,34 @@
 <body>
 	<jsp:include page="cdn.jsp"></jsp:include>
 	<%!User user = new User();
-		confServiceImpl confSer = new confService();%>
+	confServiceImpl confSer = new confService();%>
 	<%
 	user = (User) request.getSession().getAttribute("user");
 	%>
 
-	<jsp:include page="sidebar.jsp">
-		<jsp:param value="<%=user.getUserName()%>" name="uName" />
-	</jsp:include>
-
-	<%
-		List<ConferenceRoom> confList  = confSer.getAllConf();
-		for(ConferenceRoom conf:confList){
-	%>
-		<jsp:include page="confRoomCard.jsp">
-			<jsp:param value="<%= conf.getName() %>" name="name"/>
-			<jsp:param value="<%= conf.getCapacity() %>" name="capacity"/>
-			<jsp:param value="<%= conf.getId() %>" name="id"/>
+	<div class="d-flex justify-content-between">
+		<jsp:include page="sidebar.jsp">
+			<jsp:param value="<%=user.getUserName()%>" name="uName" />
 		</jsp:include>
-	<%
-		}
-	%>
+		<div class="container mt-5">
+			<div class="row row-cols-1 row-cols-md-3">
+				<%
+				List<ConferenceRoom> confList = confSer.getAllConf();
+				for (ConferenceRoom conf : confList) {
+				%>
+				<div class="col mb-4">
+					<jsp:include page="confRoomCard.jsp">
+						<jsp:param value="<%=conf.getName()%>" name="name" />
+						<jsp:param value="<%=conf.getCapacity()%>" name="capacity" />
+						<jsp:param value="<%=conf.getId()%>" name="id" />
+					</jsp:include>
+				</div>
+				<%
+				}
+				%>
+			</div>
+		</div>
+
+	</div>
 </body>
 </html>

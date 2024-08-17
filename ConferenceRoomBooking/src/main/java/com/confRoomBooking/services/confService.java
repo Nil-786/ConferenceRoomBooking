@@ -1,5 +1,8 @@
 package com.confRoomBooking.services;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,6 +32,11 @@ public class confService implements confServiceImpl{
 	public List<ConfPhotos> getPhotos() {
 		return photos;
 	}
+	
+	public ConferenceRoom getConf(int id) {
+		return confRepo.readConf(id);
+	}
+	
 	public void setPhotos(List<ConfPhotos> photos) {
 		this.photos = photos;
 	}
@@ -36,6 +44,16 @@ public class confService implements confServiceImpl{
 	public List<ConferenceRoom> getAllConf() {
 		List<ConferenceRoom> confList = confRepo.readAllConf();
 		return confList;
+	}
+	@Override
+	public byte[] readInputStream(InputStream inputStream) throws IOException {
+		ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+		byte[] data = new byte[1024];
+		int bytesRead;
+		while ((bytesRead = inputStream.read(data, 0, data.length)) != -1) {
+			buffer.write(data, 0, bytesRead);
+		}
+		return buffer.toByteArray();
 	}
 
 }

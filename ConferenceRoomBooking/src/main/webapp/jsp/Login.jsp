@@ -9,7 +9,7 @@
 <body>
 	<jsp:include page="cdn.jsp"></jsp:include>
 	<h3 class="text-secondary text-center pt-5">Login</h3>
-	<form id="loginForm" action="webapi/user/login" method="get"
+	<form id="loginForm" action="/ConferenceRoomBooking/webapi/user/login" method="get"
 		class="container w-50 mx-auto mt-4 p-5 form border  rounded shadow-sm needs-validation">
 		<div data-mdb-input-init class="form-outline mb-4">
 			<label class="form-label" for="username">Username<span

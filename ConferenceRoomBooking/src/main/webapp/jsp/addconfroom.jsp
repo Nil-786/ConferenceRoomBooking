@@ -25,6 +25,16 @@
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 <link rel="stylesheet" type="text/css" href="../styles/index.css">
+
+<!-- Toster cdn -->
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.2/js/toastr.min.js"
+	integrity="sha512-TGP4l8JruobzdKs4gMpTvhshQepDREekFl4QKd9b/bwALzzZxoAu9cJacP6m8h924i2pPDya5an4tfZmOLjWUQ=="
+	crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.2/css/toastr.min.css"
+	integrity="sha512-++iYqPA1g0OkWnzna9fxjFhuYzKlgEFL54ZRD928AXnayDJcUnUyLX77FyzwH+ewlTTCjIUsBfT8T2fsjHSogw=="
+	crossorigin="anonymous" referrerpolicy="no-referrer" />
 <!-- External JS -->
 <script src="../js/super_admin_script.js"></script>
 
@@ -113,38 +123,47 @@
 					type : 'POST',
 					url : '/ConferenceRoomBooking/webapi/conf/add',
 					data : JSON.stringify(formData),
-					contentType: 'application/json',
+					contentType : 'application/json',
 					encode : true,
 					success : function(response) {
-						console.log('conf added', response);
+						alert("Room added successfully");
+						location.reload();
 					},
 					error : function(error) {
 						console.log('failed:', error);
 					}
 				});
 			});
+
 			
 			$('#photoForm').submit(function(event) {
 				event.preventDefault();
 
-				var formData = {
-						data : $('#photo').val()
-				};
+				var formData = new FormData();
+				var files = $('#photo')[0].files;
+				var byteArrayList = [];
 
+				$.each(files, function(i, file) {
+					formData.append('photos', file);
+				});
 				$.ajax({
 					type : 'POST',
-					url : '/ConferenceRoomBooking/webapi/conf/add',
+					url : '/ConferenceRoomBooking/webapi/conf/addPhoto',
 					data : formData,
+					processData : false, // Prevent jQuery from processing the data
+					contentType : false, // Prevent jQuery from setting content type
 					dataType : 'json',
-					encode : true,
+					cache : false, // Prevent caching
 					success : function(response) {
-						console.log('conf added', response);
+						alert('Photos added successfully', response);
 					},
 					error : function(error) {
-						console.log('unsuccessful:', error);
+						console.log('Error:', error);
 					}
 				});
 			});
+
+
 		});
 	</script>
 </body>

@@ -86,7 +86,6 @@
 			<version>2.29</version>
 		</dependency>
 
-
 	</dependencies>
 	<properties>
 		<jersey.version>2.29</jersey.version>

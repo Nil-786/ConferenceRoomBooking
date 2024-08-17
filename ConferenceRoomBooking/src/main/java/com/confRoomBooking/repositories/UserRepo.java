@@ -25,7 +25,9 @@ public class UserRepo implements UserRepoImpl{
 			id = (Integer) sess.save(user);
 			sess.getTransaction().commit();
 		} catch (Exception e) {
-			sess.getTransaction().rollback();
+			if (sess.getTransaction() != null) {
+				sess.getTransaction().rollback();
+	        }
 		}finally {
 			sess.close();
 		}
@@ -41,7 +43,9 @@ public class UserRepo implements UserRepoImpl{
 			user = (User) q.list().get(0);
 			sess.getTransaction().commit();
 		} catch (Exception e) {
-			sess.getTransaction().rollback();
+			if (sess.getTransaction() != null) {
+				sess.getTransaction().rollback();
+	        }
 		}finally {
 			sess.close();
 		}
@@ -58,7 +62,9 @@ public class UserRepo implements UserRepoImpl{
 			list = q.list();
 			sess.getTransaction().commit();
 		} catch (Exception e) {
-			sess.getTransaction().rollback();
+			if (sess.getTransaction() != null) {
+				sess.getTransaction().rollback();
+	        }
 		}finally {
 			sess.close();
 		}
@@ -74,7 +80,9 @@ public class UserRepo implements UserRepoImpl{
 			sess.getTransaction().commit();
 			updated = true;
 		} catch (Exception e) {
-			sess.getTransaction().rollback();
+			if (sess.getTransaction() != null) {
+				sess.getTransaction().rollback();
+	        }
 		}finally {
 			sess.close();
 		}
@@ -92,7 +100,9 @@ public class UserRepo implements UserRepoImpl{
 			sess.getTransaction().commit();
 			deleted = true;
 		} catch (Exception e) {
-			sess.getTransaction().rollback();
+			if (sess.getTransaction() != null) {
+				sess.getTransaction().rollback();
+	        }
 		}finally {
 			sess.close();
 		}
@@ -110,7 +120,9 @@ public class UserRepo implements UserRepoImpl{
 			user = (User) q.list().get(0);
 			sess.getTransaction().commit();
 		} catch (Exception e) {
-			sess.getTransaction().rollback();
+			if (sess.getTransaction() != null) {
+				sess.getTransaction().rollback();
+	        }
 		}finally {
 			sess.close();
 		}

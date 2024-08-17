@@ -1,6 +1,9 @@
-<%@page import="com.fasterxml.jackson.databind.deser.impl.CreatorCandidate.Param"%>
+<%@page import="com.confRoomBooking.utilities.UserType"%>
+<%@page import="com.confRoomBooking.models.User"%>
+<%@page
+	import="com.fasterxml.jackson.databind.deser.impl.CreatorCandidate.Param"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+	pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -18,53 +21,95 @@
 <link rel="stylesheet" type="text/css" href="../styles/index.css">
 </head>
 <body>
+	<%!User user = new User();%>
+
+	<%
+	user = (User) request.getSession().getAttribute("user");
+	%>
 	<div class=" p-0 m-0 ">
-		<main class="offcanvas-md offcanvas-start py-3  " data-bs-backdrop="false"
-			id="sidebar" style="width: fit-content;height:100vh;" tabindex="1" >
-			<div class="d-flex flex-column flex-shrink-0  px-2 h-100 bg-body-tertiary open"
-			id="section"
-			style="width:240px;"
-				>
+		<main class="offcanvas-md offcanvas-start py-3  "
+			data-bs-backdrop="false" id="sidebar"
+			style="width: fit-content; height: 100vh;" tabindex="1">
+			<div
+				class="d-flex flex-column flex-shrink-0  px-2 h-100 bg-body-tertiary open"
+				id="section" style="width: 240px;">
 				<div class="d-flex justify-content-between" id="brand">
 					<a href="/ConferenceRoomBooking/Home.jsp"
 						class="d-flex align-items-center justify-content-center gap-2 mb-3  link-body-emphasis text-decoration-none ">
-						<i class="lni lni-apartment fs-2 text-center"></i> <span class="fs-4 content">Sidebar</span>
+						<i class="lni lni-apartment fs-2 text-center"></i> <span
+						class="fs-4 content">Sidebar</span>
 					</a>
-					<button type="button" class="btn-close d-md-none" data-bs-toggle="offcanvas" data-bs-target="#sidebar"
+					<button type="button" class="btn-close d-md-none"
+						data-bs-toggle="offcanvas" data-bs-target="#sidebar"
 						aria-label="Close"></button>
-					<button class="border-0 bg-transparent  fw-bold d-none d-md-inline" onclick="toggleSidebar()"><i class="lni lni-arrow-left fs-4 link" id="toggle-icon"></i></button>
+					<button class="border-0 bg-transparent  fw-bold d-none d-md-inline"
+						onclick="toggleSidebar()">
+						<i class="lni lni-arrow-left fs-4 link" id="toggle-icon"></i>
+					</button>
 				</div>
 
 				<hr>
 				<ul class="nav nav-pills flex-column mb-auto justify-content-evenly">
-					<li class="nav-item"><a href="/ConferenceRoomBooking/jsp/listEvents.jsp" class="d-flex gap-2 align-items-center nav-link active"
+					<!--<li class="nav-item"><a
+						href="/ConferenceRoomBooking/jsp/listEvents.jsp"
+						class="d-flex gap-2 align-items-center nav-link active"
 						aria-current="page"> <i class="lni lni-calendar fs-5 link "></i>
 							<span class="content">My Events</span>
 					</a></li>
-					<li><a href="/ConferenceRoomBooking/jsp/listConferenceRooms.jsp"
-						class="nav-link link-body-emphasis gap-2  d-flex align-items-center"> <i
-							class="lni lni-apartment link fs-5"></i><span class="content">View conference rooms</span>
+					 -->
+					<%
+					if (user.getType().equals(UserType.ADMIN) || user.getType().equals(UserType.SUPERADMIN)) {
+					%>
+					<li><a
+						href="/ConferenceRoomBooking/jsp/listConferenceRooms.jsp"
+						class="nav-link link-body-emphasis gap-2  d-flex align-items-center">
+							<i class="lni lni-apartment link fs-5"></i><span class="content">View
+								conference rooms</span>
 					</a></li>
+					<%
+					}
+					%>
+					<%
+					if (user.getType().equals(UserType.SUPERADMIN)) {
+					%>
 					<li><a href="/ConferenceRoomBooking/jsp/addconfroom.jsp"
-						class="nav-link link-body-emphasis gap-2  d-flex align-items-center"> <i
-							class="lni lni-apartment link fs-5"></i><span class="content">Add conference room</span>
+						class="nav-link link-body-emphasis gap-2  d-flex align-items-center">
+							<i class="lni lni-apartment link fs-5"></i><span class="content">Add
+								conference room</span>
 					</a></li>
+					<%
+					}
+					%>
 				</ul>
 				<hr>
 				<div class="dropdown position-relative profile">
 					<a href="#"
 						class="d-flex align-items-center  link-body-emphasis text-decoration-none dropdown-toggle"
-						data-bs-toggle="dropdown" aria-expanded="false"> <img src="https://api.dicebear.com/7.x/pixel-art/svg"
-						alt="" width="32" height="32" class="rounded-circle me-2"> <strong class="content">${param.uName}</strong>
+						data-bs-toggle="dropdown" aria-expanded="false"> <img
+						src="https://api.dicebear.com/7.x/pixel-art/svg" alt="" width="32"
+						height="32" class="rounded-circle me-2"> <strong
+						class="content">${param.uName}</strong>
 					</a>
 					<ul class="dropdown-menu text-small shadow ">
-						<li><a class="dropdown-item " href="/ConferenceRoomBooking/webapi/user/logout">Sign out</a></li>
+						<%
+						if (user.getType().equals(UserType.GUEST)) {
+						%>
+						<li><a class="dropdown-item "
+							href="/ConferenceRoomBooking/jsp/Login.jsp">Sign in</a></li>
+						<%
+						} else {
+						%>
+						<li><a class="dropdown-item "
+							href="/ConferenceRoomBooking/webapi/user/logout">Sign out</a></li>
+						<%
+						}
+						%>
 					</ul>
 				</div>
 			</div>
 		</main>
 		<a class="fs-5 link-body-emphasis d-md-none text-decoration-none"
-			data-bs-toggle="offcanvas"  data-bs-target="#sidebar"
+			data-bs-toggle="offcanvas" data-bs-target="#sidebar"
 			aria-controls="sidebar"> <i class="lni lni-list fs-3"></i></a>
 	</div>
 
@@ -77,29 +122,32 @@
 	integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
 	crossorigin="anonymous"></script>
 <script src="https://code.jquery.com/jquery-3.3.1.min.js">
-    </script>
+	
+</script>
 <script>
-function toggleSidebar() {
-	event.preventDefault();
-	if($('#section').hasClass("open")) {
-		$('.content').hide();
-		$('#section').width('fit-content');
-		$('.link').addClass("fs-5 py-1");
-		$('#toggle-icon').removeClass("lni-arrow-left");
-		$('#toggle-icon').addClass("lni-menu");
-		$('#brand').addClass("flex-column-reverse align-items-center gap-2");
-		$('#section').removeClass("open");
-		$('#section').addClass("close");
-	} else if($('#section').hasClass("close")) {
-		$('.content').show();
-		$('#section').width('240px');
-		$('.link').removeClass("fs-5  py-1");
-		$('#toggle-icon').removeClass("lni-menu");
-		$('#toggle-icon').addClass("lni-arrow-left");
-		$('#brand').removeClass("flex-column-reverse justify-content-center gap-2");
-		$('#section').removeClass("close");
-		$('#section').addClass("open");
+	function toggleSidebar() {
+		event.preventDefault();
+		if ($('#section').hasClass("open")) {
+			$('.content').hide();
+			$('#section').width('fit-content');
+			$('.link').addClass("fs-5 py-1");
+			$('#toggle-icon').removeClass("lni-arrow-left");
+			$('#toggle-icon').addClass("lni-menu");
+			$('#brand')
+					.addClass("flex-column-reverse align-items-center gap-2");
+			$('#section').removeClass("open");
+			$('#section').addClass("close");
+		} else if ($('#section').hasClass("close")) {
+			$('.content').show();
+			$('#section').width('240px');
+			$('.link').removeClass("fs-5  py-1");
+			$('#toggle-icon').removeClass("lni-menu");
+			$('#toggle-icon').addClass("lni-arrow-left");
+			$('#brand').removeClass(
+					"flex-column-reverse justify-content-center gap-2");
+			$('#section').removeClass("close");
+			$('#section').addClass("open");
+		}
 	}
-}
 </script>
 </html>

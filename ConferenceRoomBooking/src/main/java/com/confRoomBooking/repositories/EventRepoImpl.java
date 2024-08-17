@@ -2,6 +2,7 @@ package com.confRoomBooking.repositories;
 
 import java.util.List;
 
+import com.confRoomBooking.models.ConferenceRoom;
 import com.confRoomBooking.models.Event;
 
 
@@ -11,5 +12,7 @@ public interface EventRepoImpl {
 	public List<Event> readAllEvent();
 	public boolean updateEvent(Event event);
 	public boolean deleteEvent(int id);
+	public List<Event> readEventByConf(ConferenceRoom conf);
+	public Event isEventByConf(ConferenceRoom conf,Event event) ;
 	
 }

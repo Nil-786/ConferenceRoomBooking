@@ -39,7 +39,7 @@ public class Global extends HttpFilter implements Filter {
 	    String uri = req.getRequestURI();
 	    System.out.println(uri);
 
-	    if (uri.endsWith("/login")) {
+	    if (uri.endsWith("/login") || uri.endsWith("/Login.jsp")) {
 	        chain.doFilter(request, response);
 	        return;
 	    }
@@ -50,6 +50,10 @@ public class Global extends HttpFilter implements Filter {
 	    }
 
 	    if (user != null) {
+	    	if(user.getType().equals(UserType.GUEST)) {
+	    		RequestDispatcher dispatcher = req.getRequestDispatcher("/Home.jsp");
+		        dispatcher.forward(request, response);
+	    	}
 	        chain.doFilter(request, response);
 	    } else {
 	        if (session == null) {

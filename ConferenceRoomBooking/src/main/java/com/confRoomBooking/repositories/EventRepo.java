@@ -13,9 +13,11 @@ import com.confRoomBooking.utilities.SessionGenerator;
 public class EventRepo implements EventRepoImpl {
 
 	Session sess;
+
 	public EventRepo() {
 		sess = new SessionGenerator().getSess();
 	}
+
 	@Override
 	public int addEvent(Event event) {
 		Integer id = 0;
@@ -26,9 +28,11 @@ public class EventRepo implements EventRepoImpl {
 		} catch (Exception e) {
 			if (sess.getTransaction() != null) {
 				sess.getTransaction().rollback();
-	        }
-		}finally {
-			sess.close();
+			}
+		} finally {
+			if (sess.getTransaction().isActive()) {
+				sess.getTransaction().rollback();
+			}
 		}
 		return id;
 
@@ -39,17 +43,19 @@ public class EventRepo implements EventRepoImpl {
 		Event event = new Event();
 		try {
 			sess.beginTransaction();
-			Query q = sess.createQuery("from Event where id = "+id);
-			event =  (Event) q.list().get(0);
+			Query q = sess.createQuery("from Event where id = " + id);
+			event = (Event) q.list().get(0);
 			sess.getTransaction().commit();
 		} catch (Exception e) {
 			if (sess.getTransaction() != null) {
 				sess.getTransaction().rollback();
-	        }
-		}finally {
-			sess.close();
+			}
+		} finally {
+			if (sess.getTransaction().isActive()) {
+				sess.getTransaction().rollback();
+			}
 		}
-		
+
 		return event;
 	}
 
@@ -58,15 +64,18 @@ public class EventRepo implements EventRepoImpl {
 		List<Event> list = new ArrayList<>();
 		try {
 			sess.beginTransaction();
-			Query q = sess.createQuery("from Event");
+			Query q = sess.createQuery(
+					"select e.conferenceRoom.id, e.username ,e.start ,e.end, e.title, e.empCode from Event e");
 			list = q.list();
 			sess.getTransaction().commit();
 		} catch (Exception e) {
 			if (sess.getTransaction() != null) {
 				sess.getTransaction().rollback();
-	        }
-		}finally {
-			sess.close();
+			}
+		} finally {
+			if (sess.getTransaction().isActive()) {
+				sess.getTransaction().rollback();
+			}
 		}
 		return list;
 
@@ -83,9 +92,11 @@ public class EventRepo implements EventRepoImpl {
 		} catch (Exception e) {
 			if (sess.getTransaction() != null) {
 				sess.getTransaction().rollback();
-	        }
-		}finally {
-			sess.close();
+			}
+		} finally {
+			if (sess.getTransaction().isActive()) {
+				sess.getTransaction().rollback();
+			}
 		}
 		return updated;
 	}
@@ -103,54 +114,60 @@ public class EventRepo implements EventRepoImpl {
 		} catch (Exception e) {
 			if (sess.getTransaction() != null) {
 				sess.getTransaction().rollback();
-	        }
-		}finally {
-			sess.close();
+			}
+		} finally {
+			if (sess.getTransaction().isActive()) {
+				sess.getTransaction().rollback();
+			}
 		}
+
 		return deleted;
 	}
-	
-	public List<Event> readEventByConf(ConferenceRoom conf) {
+
+	public List<Event> readEventByConf(int confId) {
 		List<Event> list = new ArrayList<>();
-		
+
 		try {
 			sess.beginTransaction();
-			Query q = sess.createQuery("from Event where conf_room_id=:confg");
-			q.setParameter("confg",conf);
+			Query q = sess.createQuery("select e.conferenceRoom.id, e.username ,e.start ,e.end, e.title, e.empCode from Event e where e.conferenceRoom.id=:confg");
+			q.setParameter("confg", confId);
 			list = q.list();
-		} catch(Exception e) {
+		} catch (Exception e) {
 			if (sess.getTransaction() != null) {
 				sess.getTransaction().rollback();
-	        }
+			}
 		} finally {
-			sess.close();
+			if (sess.getTransaction().isActive()) {
+				sess.getTransaction().rollback();
+			}
 		}
-		
+
 		return list;
 	}
-	
-	
-	
-	public Event isEventByConf(ConferenceRoom conf,Event event) {
+
+	public boolean isEventByConf(Event event) {
+		long count = 0;
 		try {
 			sess.beginTransaction();
-			Query q = sess.createQuery("from Event e where e.conf_room_id =:conf and (((e.start between :startTime and :endTime) or (e.end between :startTime and :endTime)) or (e.start <=:startTime and e.end >=:endTime))");
-			q.setParameter("startTime", event.getStart());
-			q.setParameter("endTime", event.getEnd());
-			q.setParameter("conf", conf);
-			
-			if(q.list().size() > 0) {
-				return (Event) q.list().get(0);
-			}
-		} catch(Exception e) {
-			if (sess.getTransaction() != null) {
-				sess.getTransaction().rollback();
-	        }
+			Query q = sess.createQuery(
+					"select count(e) from Event e where e.conferenceRoom.id =:conf AND (e.start <= :newEnd AND e.end >= :newStart)");
+			q.setParameter("conf", event.getConferenceRoom().getId());
+			q.setParameter("newStart", event.getStart());
+			q.setParameter("newEnd", event.getEnd());
+
+			count = (Long) q.getSingleResult();
+
+			sess.getTransaction().commit();
+		} catch (Exception e) {
+			System.out.println(e);
+			sess.getTransaction().rollback();
 		} finally {
-			sess.close();
+			if (sess.getTransaction().isActive()) {
+				sess.getTransaction().rollback();
+			}
 		}
-		
-		return null;
+
+		return count == 0;
 	}
 
 }

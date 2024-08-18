@@ -13,7 +13,6 @@ public class EventService implements EventServiceImpl{
 	
 	public EventService() {
 		this.repo = new EventRepo();
-		this.confRepo = new ConferenceRoomRepo();
 	}
 	
 	
@@ -38,11 +37,11 @@ public class EventService implements EventServiceImpl{
 	}
 	
 	public List<Event> getEventByConfId(int confId) {
-		return repo.readEventByConf(confRepo.readConf(confId));
+		return repo.readEventByConf(confId);
 	}
 	
-	public Event checkEvent(Event event) {
-		return repo.isEventByConf(confRepo.readConf(event.getConferenceRoom().getId()), event);
+	public boolean checkEvent(Event event) {
+		return repo.isEventByConf(event);
 	}
 	
 }

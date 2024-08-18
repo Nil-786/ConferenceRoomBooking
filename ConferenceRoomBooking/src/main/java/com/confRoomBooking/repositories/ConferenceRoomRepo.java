@@ -50,7 +50,7 @@ public class ConferenceRoomRepo implements ConferenceRoomRepoImpl {
 				sess.getTransaction().rollback();
 	        }
 		}finally {
-			sess.close();
+			
 		}
 		
 		return croom;

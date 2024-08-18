@@ -37,6 +37,7 @@ public class EventController {
 		Event event  = new Event();
 		ConferenceRoom room = conf.getConf(confId);
 		if(room == null) {
+			System.out.println("room error");
 			throw new WebApplicationException("room not present",Response.Status.BAD_REQUEST);
 		}
 		
@@ -45,14 +46,15 @@ public class EventController {
 		
 		event.setTitle(title);
 		event.setEmpCode(empCode);
-		
-		event.setStart(LocalDateTime.parse(start));
+		event.setStart(startTime);
+		event.setEnd(endTime);
 		event.setUsername(empName);
 		event.setConferenceRoom(room);
-		Event oldEvent = eventService.checkEvent(event);
+		eventService.checkEvent(event);
 		
-		if(oldEvent != null) {
-			throw new WebApplicationException("conflicting already booked events!!",Response.ok(oldEvent).build());
+		if(!eventService.checkEvent(event)) {
+			System.out.println("old event");
+			throw new WebApplicationException("conflicting already booked events!!",Response.Status.CONFLICT);
 		}
 		
 		int id = eventService.addEvent(event);
@@ -65,9 +67,7 @@ public class EventController {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getEvents() {
 		List<Event> list = eventService.getEvents();
-		GenericEntity entity = new GenericEntity<List<Event>>(list){};
-		 
-		return Response.ok(entity).build();
+		return Response.ok(list).build();
 	}
 	
 	@GET
@@ -81,8 +81,6 @@ public class EventController {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getEventByConfId(@PathParam("confId") int confId) {
 		List<Event> list = eventService.getEventByConfId(confId);
-		GenericEntity entity = new GenericEntity<List<Event>>(list){};
-		
-		return Response.ok(entity).build();
+		return Response.ok(list).build();
 	}
 }

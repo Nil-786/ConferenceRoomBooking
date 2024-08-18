@@ -41,7 +41,8 @@ public class ConferenceRoomRepo implements ConferenceRoomRepoImpl {
 		ConferenceRoom croom = new ConferenceRoom();
 		try {
 			sess.beginTransaction();
-			Query q = sess.createQuery("from ConferenceRoom where id = "+id);
+			Query q = sess.createQuery("from ConferenceRoom where id=:id");
+			q.setParameter("id",id);
 			croom =  (ConferenceRoom) q.list().get(0);
 			sess.getTransaction().commit();
 		} catch (Exception e) {
@@ -49,7 +50,7 @@ public class ConferenceRoomRepo implements ConferenceRoomRepoImpl {
 				sess.getTransaction().rollback();
 	        }
 		}finally {
-			sess.close();
+			
 		}
 		
 		return croom;
@@ -117,5 +118,7 @@ public class ConferenceRoomRepo implements ConferenceRoomRepoImpl {
 		}
 		return deleted;
 	}
+	
+	
 
 }

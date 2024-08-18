@@ -34,4 +34,7 @@ public class conferenceController {
 		confService.addPhoto(photo);
 		return Response.ok().build();
 	}
+	
+	
+	
 }

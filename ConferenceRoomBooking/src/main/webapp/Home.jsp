@@ -27,8 +27,8 @@
 					<jsp:param value="<%=user.getUserName()%>" name="uName" />
 				</jsp:include>
 			</div>
-			<div class="view mx-auto w-100 mt-5">
-				<div id="calendar" class="overflow-auto" style="max-height: 80vh;"></div>
+			<div class="view overflow-auto w-100 m-4" style="max-height: 90vh;">
+				<div id="calendar"></div>
 			</div>
 		</div>
 

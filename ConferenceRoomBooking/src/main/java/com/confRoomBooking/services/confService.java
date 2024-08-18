@@ -26,6 +26,10 @@ public class confService implements confServiceImpl{
 		photos.add(photo);
 	}
 	
+	public ConferenceRoom getConf(int id) {
+		return confRepo.readConf(id);
+	}
+	
 	public List<ConfPhotos> getPhotos() {
 		return photos;
 	}

@@ -4,6 +4,8 @@ import java.time.LocalDateTime;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 @Entity
 public class Event {
 	
@@ -16,6 +18,7 @@ public class Event {
 	Long empCode;
 	
 	LocalDateTime start;
+	
 	
 	LocalDateTime end;
 	

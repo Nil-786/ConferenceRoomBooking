@@ -5,11 +5,11 @@
 	<session-factory>
 
 		<property name="hibernate.dialect">
-			org.hibernate.dialect.MySQL5Dialect
+			org.hibernate.dialect.MySQL8Dialect
 		</property>
 
 		<property name="hibernate.connection.driver_class">
-			com.mysql.jdbc.Driver
+			com.mysql.cj.jdbc.Driver
 		</property>
 
 		<property name="hibernate.connection.url">
@@ -21,7 +21,7 @@
 		</property>
 
 		<property name="hibernate.connection.password">
-			root
+			m1k2p3r4a5
 		</property>
 		<property name="hibernate.hbm2ddl.auto">update</property>
 		<property name="hibernate.show_sql">true</property>

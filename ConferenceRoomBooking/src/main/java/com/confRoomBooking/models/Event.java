@@ -21,7 +21,7 @@ public class Event {
 	
 	String title;
 	
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "conf_room_id")
 	ConferenceRoom conferenceRoom;
 

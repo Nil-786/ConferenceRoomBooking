@@ -30,101 +30,117 @@
 	<%
 	roomId = Integer.parseInt(request.getParameter("id"));
 	%>
-	<div class="container mt-5 w-50 border border-primary rounded">
+	<div class="d-flex justify-content-between">
+		<jsp:include page="sidebar.jsp"></jsp:include>
+		<div class="container mt-5 w-50 border border-primary rounded">
 		<h2>Room Booking Form</h2>
 		<form id="bookingForm">
 			<div class="mb-3">
 				<label for="roomId" class="form-label">Room ID</label> <input
 					type="text" class="form-control" id="roomId" disabled="disabled"
-					value="<%=roomId%>">
+					value="<%=roomId%>" required="required">
 				<div id="error-roomId"></div>
 			</div>
 			<div class="mb-3">
 				<label for="employeeId" class="form-label">Employee ID</label> <input
 					type="number" class="form-control" id="employeeId"
-					placeholder="Enter Employee ID">
+					placeholder="Enter Employee ID" required="required">
 				<div id="error-employeeId"></div>
 			</div>
 			<div class="mb-3">
 				<label for="employeeName" class="form-label">Employee Name</label> <input
 					type="text" class="form-control" id="employeeName"
-					placeholder="Enter Employee Name">
+					placeholder="Enter Employee Name" required="required"> 
 				<div id="error-employeeName"></div>
 			</div>
 			<div class="mb-3">
 				<label for="startTime" class="form-label">Start Time</label> <input
 					type="datetime-local" class="form-control" id="startTime" min=""
-					max="">
+					max="" required="required">
 				<div id="error-startTime"></div>
 			</div>
 			<div class="mb-3">
 				<label for="endTime" class="form-label">End Time</label> <input
 					type="datetime-local" class="form-control" id="endTime" min=""
-					max="">
+					max="" required="required">
 				<div id="error-endTime"></div>
 			</div>
 			<div class="mb-3">
 				<label for="eventTitle" class="form-label">Event Title</label> <input
 					type="text" class="form-control" id="eventTitle"
-					placeholder="Enter event title">
+					placeholder="Enter event title" required="required">
 			</div>
 			<button type="submit" class="w-100  btn btn-primary mb-2">Submit</button>
 		</form>
 
 	</div>
+	</div>
 	<script>
-        // Function to format date to 'yyyy-MM-ddTHH:mm'
-        const formatDate = (date) => {
-        	if (!date) return '';
-            const isoString = date.toISOString();
-            return isoString.substring(0, 16);
-        };
-        // Set min and max date for the date inputs
-        const today = new Date();
-        const minDate = new Date(today);
-        const maxDate = new Date(today);
-        maxDate.setDate(today.getDate() + 7);
-        console.log('Min Date:', formatDate(minDate));
-        console.log('Max Date:', formatDate(maxDate));
-        
-        
-        document.getElementById('startTime').min = formatDate(minDate);
-        document.getElementById('startTime').max = formatDate(maxDate);
-        document.getElementById('endTime').min = formatDate(minDate);
-        document.getElementById('endTime').max = formatDate(maxDate);
-        
-        $('#bookingForm').on('submit', function(event) {
-        	event.preventDefault();
-        	
-	         const id = $('#roomId').val();
-	         const startDate = $('#startTime').val();
-	         const endDate = $('#endTime').val();
-	         
-	         console.log(Date.parse(startDate).getTime());
-	         
-	         if(Date.parse(startDate).getTime() > Date.parse(endDate).getTime()) {
-	        	 $('#error-endTime').text("end time is less than start time ");
-	        	 return;
-	         } else if(Date.parse(startDate).getTime() === Date.parse(endDate).getTime()) {
-	        	 $('#error-startTime').text("both start and end time are equal");
-	        	 $('#error-endTime').text("both start and end time are equal");
-	        	 return;
-	         }
-	         
-	         $.ajax({
-	             type: 'GET',
-	             url: "http://localhost:8080/ConferenceRoomBooking/webapi/event/1/add?employeeName="+$('#employeeName').val()+"&employeeId="+$('#employeeId').val()+"&startTime="+$('#startTime').val()+"&endTime="+$('#endTime').val()+"&eventTitle="+$('#eventTitle').val(),
-	             success: function(response) {
-	                 alert('Event submitted successfully!');
-	             },
-	             error: function(error) {
-	                 alert('Error submitting event.');
-	             }
-	         });
-        	
-        	
-        })
-        
+        $(document).ready(function(){
+        	// Function to format date to 'yyyy-MM-ddTHH:mm'
+            const formatDate = (date) => {
+            	if (!date) return '';
+                const isoString = date.toISOString();
+                return isoString.substring(0, 16);
+            };
+            // Set min and max date for the date inputs
+            const today = new Date();
+            const minDate = new Date(today);
+            const maxDate = new Date(today);
+            maxDate.setDate(today.getDate() + 7);
+            console.log('Min Date:', formatDate(minDate));
+            console.log('Max Date:', formatDate(maxDate));
+            
+            
+            document.getElementById('startTime').min = formatDate(minDate);
+            document.getElementById('startTime').max = formatDate(maxDate);
+            document.getElementById('endTime').min = formatDate(minDate);
+            document.getElementById('endTime').max = formatDate(maxDate);
+            
+            $('#bookingForm').on('submit', function(event) {
+            	event.preventDefault();
+            	
+    	         const id = $('#roomId').val();
+    	         const startDate = $('#startTime').val();
+    	         const endDate = $('#endTime').val();
+    	         
+    	         var formData = {
+    	        		 username:$('#employeeName').val(),
+    	        		 empCode:$('#employeeId').val(),
+    	        		 start:$('#startTime').val(),
+    	        		 end:$('#endTime').val(),
+    	        		 confRoomId:$('#roomId').val(),
+    	        		 title:$('#eventTitle').val()
+    	         }
+    	        
+    	         
+    	         if(new Date(Date.parse(startDate)).getTime() > new Date(Date.parse(endDate)).getTime()) {
+    	        	 $('#error-endTime').text("end time is less than start time ");
+    	        	 return;
+    	         } else if(new Date(Date.parse(startDate)).getTime() === new Date(Date.parse(endDate)).getTime()) {
+    	        	 $('#error-startTime').text("both start and end time are equal");
+    	        	 $('#error-endTime').text("both start and end time are equal");
+    	        	 return;
+    	         }
+    	         
+    	         $.ajax({
+    	             type: 'POST',
+    	             url: "/ConferenceRoomBooking/webapi/event/add",
+    	             contentType:'application/json',
+    	             encode:true,	
+    	             data:JSON.stringify(formData),
+    	             success: function(response) {
+    	                 alert('Event submitted successfully!',response);
+    	                 location.reload();
+    	             },
+    	             error: function(error) {
+    	                 alert('Time slot is not free');
+    	             }
+    	         });
+            	
+            	
+            })
+        });
     </script>
 
 </body>

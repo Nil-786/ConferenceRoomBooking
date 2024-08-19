@@ -13,6 +13,6 @@ public interface EventRepoImpl {
 	public boolean updateEvent(Event event);
 	public boolean deleteEvent(int id);
 	public List<Event> readEventByConf(ConferenceRoom conf);
-	public Event isEventByConf(ConferenceRoom conf,Event event) ;
+	public boolean eventExists(ConferenceRoom conf,Event event) ;
 	
 }

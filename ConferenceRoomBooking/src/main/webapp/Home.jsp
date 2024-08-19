@@ -37,41 +37,39 @@
 
 
 <script>
-	$(document).ready(function() {
-		const calendarEl = $('#calendar')[0];
-		const calendar = new FullCalendar.Calendar(calendarEl, {
-			initialView : 'dayGridMonth',
-			headerToolbar : {
-				left : 'prev,next today',
-				center : 'title',
-				right : 'dayGridMonth,timeGridWeek,timeGridDay'
-			},
-			events : [ {
-				title : 'Nilesh Day Event',
-				start : '2024-08-03'
-			}, {
-				title : 'Long Event',
-				start : '2024-08-07',
-				end : '2024-08-10'
-			}, {
-				groupId : '999',
-				title : 'Repeating Event',
-				start : '2024-08-09T16:00:00'
-			}, {
-				groupId : '99',
-				title : 'Repeating Event',
-				start : '2024-08-16T16:00:00'
-			}, {
-				title : 'Conference',
-				start : '2024-08-11',
-				end : '2024-08-13'
-			}, {
-				title : 'Meeting',
-				start : '2024-08-12T10:30:00',
-				end : '2024-08-12T12:30:00'
-			} ]
-		});
-		calendar.render();
-	});
+$(document).ready(function() {
+    $.ajax({
+        type: 'GET',
+        url: '/ConferenceRoomBooking/webapi/event/get',
+        dataType: 'json',
+        encode: true,
+        success: function(response) {
+        	
+            const events = response.map(event => ({
+                title: event.title,
+                start: event.start + ":00",
+                end: event.end + ":00",
+                url:'/ConferenceRoomBooking/jsp/eventDet.jsp?title='+event.title+'&start='+event.start+'&end='+event.end+'&userName='+event.username+'&uCode='+event.empCode+'&confRoomName='+event.confRoomName
+            }));
+			console.log(events);
+            // Initialize FullCalendar after fetching events
+            const calendarEl = $('#calendar')[0];
+            const calendar = new FullCalendar.Calendar(calendarEl, {
+                initialView: 'dayGridMonth',
+                headerToolbar: {
+                    left: 'prev,next today',
+                    center: 'title',
+                    right: 'dayGridMonth,timeGridWeek,timeGridDay'
+                },
+                events: events // Pass the fetched events here
+            });
+            calendar.render();
+        },
+        error: function(error) {
+            console.log('Fetching events failed:', error);
+        }
+    });
+});
+
 </script>
 </html>

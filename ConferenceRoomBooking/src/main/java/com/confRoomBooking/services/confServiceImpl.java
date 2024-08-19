@@ -11,6 +11,7 @@ public interface confServiceImpl {
 	
 	public int addConf(ConferenceRoom confRoom);
 	public void addPhoto(ConfPhotos photo);
+	public ConferenceRoom getConf(int id);
 	public List<ConferenceRoom> getAllConf();
 	public byte[] readInputStream(InputStream inputStream) throws IOException;
 }

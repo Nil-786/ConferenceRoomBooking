@@ -37,7 +37,7 @@
 					<a href="/ConferenceRoomBooking/Home.jsp"
 						class="d-flex align-items-center justify-content-center gap-2 mb-3  link-body-emphasis text-decoration-none ">
 						<i class="lni lni-apartment fs-2 text-center"></i> <span
-						class="fs-4 content">Sidebar</span>
+						class="fs-4 content">Home</span>
 					</a>
 					<button type="button" class="btn-close d-md-none"
 						data-bs-toggle="offcanvas" data-bs-target="#sidebar"
